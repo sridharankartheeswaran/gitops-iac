@@ -56,7 +56,7 @@ jobs:
 
   Destroy:
     name: Destroy the Resources
-    if: github.event.inputs.action == 'destroy'
+    if: github.event.inputs.action == 'delete'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
