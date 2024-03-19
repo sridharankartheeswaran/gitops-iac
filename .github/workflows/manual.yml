@@ -1,4 +1,4 @@
-name: Deploy/Delete Resources
+name: Deploy/Delete Resources Manually
 
 on:
   workflow_dispatch:
