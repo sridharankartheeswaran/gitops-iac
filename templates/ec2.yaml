@@ -7,8 +7,6 @@ Resources:
       InstanceType: t2.micro        # Replace with the desired instance type
       KeyName: MyKeyPair          # Replace with your existing key pair name
       SecurityGroups: [!GetAtt SecurityGroup.GroupId]  # Security group reference
-Tags:
-  Name: MyEC2Instance
 Outputs:
   InstanceId:
     Description: InstanceId of the newly created EC2 instance

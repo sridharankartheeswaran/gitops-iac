@@ -26,6 +26,6 @@ jobs:
         
     - name: Validate CloudFormation templates
       run: |
-        for template in $(find . -name '*.yaml' -o -name '*.yml'); do
+        for template in $(find templates -name '*.yaml' -o -name '*.yml'); do
           aws cloudformation validate-template --template-body file://$template
         done
