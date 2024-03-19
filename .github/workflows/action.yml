@@ -20,7 +20,5 @@ jobs:
         aws-region: ${{ vars.AWS_REGION }}
 
     - name: Deploy CloudFormation Stacks
-      uses: ./deploy.sh  # Replace with actual script path if not in same directory
-      with:
-        TEMPLATE_DIR: ./templates
+      run: ./deploy.sh  # Replace with actual script path if not in same directory
 
