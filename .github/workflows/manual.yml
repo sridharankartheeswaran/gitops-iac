@@ -35,6 +35,7 @@ env:
 jobs:
   Create/Update:
     name: Update Infra to Desired State
+    if: github.event.inputs.action == 'create/update'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -49,12 +50,13 @@ jobs:
 
     - name: Change Permission
       run: chmod +x ./deploy.sh
-      
+
     - name: Deploy CloudFormation Stacks
       run: ./deploy.sh 
 
   Destroy:
     name: Destroy the Resources
+    if: github.event.inputs.action == 'destroy'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
