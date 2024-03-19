@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0be58822d8727281b  # Replace with the desired AMI ID
+      InstanceType: t2.micro        # Replace with the desired instance type
+      KeyName: MyKeyPair          # Replace with your existing key pair name
+      SecurityGroups: [!GetAtt SecurityGroup.GroupId]  # Security group reference
+Tags:
+  Name: MyEC2Instance
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value: !Ref MyEC2Instance
+Resources:
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for MyEC2Instance
+      SecurityGroupIngress:
+      - FromPort: 22
+        ToPort: 22
+        IpProtocol: tcp
+        CidrIp: 0.0.0.0/0  # You can restrict access here (e.g., your public IP)
+Outputs:
+  SecurityGroupId:
+    Description: Security Group ID of the newly created security group
+    Value: !Ref SecurityGroup
