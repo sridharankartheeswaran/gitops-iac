@@ -51,14 +51,3 @@ jobs:
         aws-secret-access-key: ${{ env.secretkey }}
         aws-region: ${{ env.region }}
 
-  Deploy:
-    name: Deploying Resources
-    if: github.event.inputs.type == 'infra'
-    needs: init
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.env }}
-    outputs:
-      stack-id: ${{ steps.getoutputs.outputs.stack-id }}
-    - name: Deploying Resources
-      uses: ./templates/ec2.yml
-
