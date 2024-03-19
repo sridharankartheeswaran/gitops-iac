@@ -33,7 +33,7 @@ env:
   secretkey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
-  Create/Update:
+  Create:
     name: Update Infra to Desired State
     if: github.event.inputs.action == 'create/update'
     runs-on: ubuntu-latest
