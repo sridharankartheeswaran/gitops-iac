@@ -19,12 +19,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Deploy CloudFormation stacks
-      run: |
-        for template in $(find templates -name '*.yaml' -o -name '*.yml'); do
-          aws cloudformation deploy \
-            --template-file $template \
-            --stack-name $(basename $template .yaml) \
-            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
-        done
+    - name: Deploy CloudFormation Stacks
+      uses: ./deploy.sh  # Replace with actual script path if not in same directory
+      with:
+        TEMPLATE_DIR: ./templates
 
