@@ -47,6 +47,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
 
+    - name: Change Permission
+      run: chmod +x ./deploy.sh
+      
     - name: Deploy CloudFormation Stacks
       run: ./deploy.sh 
 
@@ -64,6 +67,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
     
+    - name: Change Permission
+      run: chmod +x ./destroy.sh
+
     - name: Deploy CloudFormation Stacks
       run: ./destroy.sh 
 
