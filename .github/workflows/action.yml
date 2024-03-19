@@ -1,4 +1,4 @@
-name: Update Infra
+name: Update Infra to Desired State
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   init:
-    name: Init job
+    name: Update Infra to Desired State
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -19,10 +19,12 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Deploy CloudFormation stack
-      uses: aws-actions/aws-cloudformation-deploy@v2
-      with:
-        template: ./tempaltes/ec2.yaml
-        stack-name: my-cloudformation-stack
-        capabilities: CAPABILITY_IAM 
+    - name: Deploy CloudFormation stacks
+      run: |
+        for template in $(find templates -name '*.yaml' -o -name '*.yml'); do
+          aws cloudformation deploy \
+            --template-file $template \
+            --stack-name $(basename $template .yaml) \
+            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
+        done
 

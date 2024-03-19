@@ -25,7 +25,26 @@ jobs:
         aws-region: ${{ env.region }}
         
     - name: Validate CloudFormation templates
+      id: validate
       run: |
         for template in $(find templates -name '*.yaml' -o -name '*.yml'); do
           aws cloudformation validate-template --template-body file://$template
         done
+
+    - name: Set validation status
+      if: ${{ steps.validate.outcome == 'success' }}
+      run: echo "::set-output name=validation_status::success"
+
+    - name: Comment on pull request
+      if: ${{ steps.validate.outcome == 'success' }}
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { owner, repo, number } = context.issue;
+          github.issues.createComment({
+            owner,
+            repo,
+            issue_number: number,
+            body: 'CloudFormation template validation succeeded. The merge can proceed.'
+          });
