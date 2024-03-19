@@ -1,3 +1,4 @@
+#!/bin/bash
 TEMPLATE_DIR=${1:-./templates}  # Get directory path from input or default to ./templates
 
 for template in "$TEMPLATE_DIR"/*.yaml; do

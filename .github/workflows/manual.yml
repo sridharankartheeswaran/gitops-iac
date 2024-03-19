@@ -33,8 +33,9 @@ env:
   secretkey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
-  Create/Update:
+  Create:
     name: Update Infra to Desired State
+    if: github.event.inputs.action == 'create/update'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -47,11 +48,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
 
+    - name: Change Permission
+      run: chmod +x ./deploy.sh
+
     - name: Deploy CloudFormation Stacks
       run: ./deploy.sh 
 
   Destroy:
     name: Destroy the Resources
+    if: github.event.inputs.action == 'delete'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -64,6 +69,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
     
+    - name: Change Permission
+      run: chmod +x ./destroy.sh
+
     - name: Deploy CloudFormation Stacks
       run: ./destroy.sh 
 
