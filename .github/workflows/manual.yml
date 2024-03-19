@@ -47,14 +47,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Deploy CloudFormation stacks
-      run: |
-        for template in $(find templates -name '*.yaml' -o -name '*.yml'); do
-          aws cloudformation deploy \
-            --template-file $template \
-            --stack-name "${{ vars.AWS_REGION }}-stack-$(basename $template .yaml)" \
-            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
-        done
+    - name: Deploy CloudFormation Stacks
+      run: ./deploy.sh 
 
   Destroy:
     name: Destroy the Resources
@@ -69,5 +63,8 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
+    
+    - name: Deploy CloudFormation Stacks
+      run: ./destroy.sh 
 
 
